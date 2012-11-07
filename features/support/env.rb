@@ -4,6 +4,8 @@
 # instead of editing this one. Cucumber will automatically load all features/**/*.rb
 # files.
 
+require 'simplecov'
+SimpleCov.start 'rails'
 require 'cucumber/rails'
 
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
@@ -41,7 +43,10 @@ end
 # See the DatabaseCleaner documentation for details. Example:
 #
 #   Before('@no-txn,@selenium,@culerity,@celerity,@javascript') do
-#     DatabaseCleaner.strategy = :truncation, {:except => %w[widgets]}
+#     # { :except => [:widgets] } may not do what you expect here
+#     # as tCucumber::Rails::Database.javascript_strategy overrides
+#     # this setting.
+#     DatabaseCleaner.strategy = :truncation
 #   end
 #
 #   Before('~@no-txn', '~@selenium', '~@culerity', '~@celerity', '~@javascript') do
